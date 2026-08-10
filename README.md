@@ -12,7 +12,7 @@ The system is structured as a collection of decoupled, domain-specific microserv
 
 ---
 
-## 🏗️ Repository Architecture
+## Repository Architecture
 
 The project is structured into modular workspaces, desktop applications, and decoupled microservices communicating over high-performance IPC boundaries (gRPC & WebSockets):
 
@@ -39,7 +39,7 @@ ideal-atc/
 
 ---
 
-## 🛠️ Local Development Quickstart
+## Local Development Quickstart
 
 ### Prerequisites
 * **Git**
