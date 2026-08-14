@@ -1,0 +1,24 @@
+{
+  "name": "ideal-atc",
+  "version": "1.0.0",
+  "description": "ATC software UI",
+  "homepage": "https://github.com/IdealTech-Global-LTD/ideal-atc#readme",
+  "bugs": {
+    "url": "https://github.com/IdealTech-Global-LTD/ideal-atc/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IdealTech-Global-LTD/ideal-atc.git"
+  },
+  "license": "ISC",
+  "author": "IDEAL TECH GLOBAL",
+  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "npm run test"
+  }
+}
