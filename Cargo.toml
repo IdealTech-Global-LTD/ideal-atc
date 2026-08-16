@@ -3,4 +3,5 @@ resolver = "3"
 
 members = [
     "services/core-rust/crates/surveillance-domain",
+    "services/core-rust/crates/adsb-ingest",
 ]
