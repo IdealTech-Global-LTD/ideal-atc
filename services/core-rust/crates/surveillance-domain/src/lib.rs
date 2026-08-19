@@ -1,3 +1,4 @@
+pub mod aircraft_identifier;
 pub mod altitude;
 pub mod error;
 pub mod identifier;
@@ -8,6 +9,7 @@ pub mod timestamp;
 pub mod track;
 pub mod velocity;
 
+pub use aircraft_identifier::AircraftIdentifier;
 pub use altitude::Altitude;
 pub use error::DomainError;
 pub use identifier::Identifier;

@@ -39,12 +39,14 @@ mod tests {
     #[test]
     fn creates_track_from_observation() {
         let observation = Observation::new(
-            Position::new(4.5, 8.1),
-            Altitude::new(15000.0),
-            Velocity::new(300.0, 270.0, -700.0),
-            SignalQuality::Medium,
+            AircraftIdentifier::new("40621D"),
+            Position::new(4.0, 8.0),
+            Altitude::new(10000.0),
+            Velocity::new(220.0, 180.0, 0.0),
+            SignalQuality::High,
         );
 
+        assert_eq!(observation.aircraft_id.value(), "40621D");
         let track = Track::from_observation(&observation);
 
         assert_eq!(track.position, observation.position);
