@@ -1,14 +1,12 @@
 use surveillance_domain::Observation;
 
-use crate::{frame::AdsbFrame, parser::validate};
+use crate::{frame::AdsbFrame, parser::parse};
 
 /// Converts a validated ADS-B frame into an Observation.
 ///
 /// Currently a placeholder until ICAO ADS-B decoding is implemented.
 pub fn decode(frame: AdsbFrame) -> Option<Observation> {
-    if !validate(&frame) {
-        return None;
-    }
+    let _message = parse(&frame)?;
 
     // TODO: Decode ICAO ADS-B message into Observation
     None
