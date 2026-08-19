@@ -15,5 +15,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     info!("Listening On {}", listener.address());
 
-    Ok(())
+    loop {
+        let (frame, sender) = listener.receive().await?;
+
+        info!(
+            sender = %sender,
+            bytes = frame.len(),
+            "ADS-B packet received"
+        );
+    }
+
+    // Ok(())
 }
