@@ -4,6 +4,9 @@ use surveillance_domain::{AircraftIdentifier, Observation};
 
 use crate::state::TrackState;
 
+use chrono::{Duration, Utc};
+const TRACK_TIMEOUT_SECONDS: i64 = 60;
+
 pub struct TrackEngine {
     tracks: HashMap<AircraftIdentifier, TrackState>,
 }
@@ -19,6 +22,17 @@ impl TrackEngine {
         Self {
             tracks: HashMap::new(),
         }
+    }
+
+    pub fn remove_stale_tracks(&mut self) {
+        let now = Utc::now();
+
+        self.tracks
+            .retain(|_, track| now - track.last_seen < Duration::seconds(TRACK_TIMEOUT_SECONDS));
+    }
+
+    pub fn active_tracks(&self) -> Vec<&TrackState> {
+        self.tracks.values().collect()
     }
 
     pub fn process(&mut self, observation: Observation) {
@@ -78,5 +92,23 @@ mod tests {
 
         assert_eq!(track.updates, 2);
         assert_eq!(engine.total_tracks(), 1);
+    }
+
+    #[test]
+    fn removes_stale_track() {
+        use chrono::Duration;
+
+        let mut engine = TrackEngine::new();
+
+        engine.process(sample_observation());
+
+        let aircraft = AircraftIdentifier::new("40621D");
+
+        let track = engine.tracks.get_mut(&aircraft).unwrap();
+        track.last_seen -= Duration::seconds(61);
+
+        engine.remove_stale_tracks();
+
+        assert_eq!(engine.total_tracks(), 0);
     }
 }
