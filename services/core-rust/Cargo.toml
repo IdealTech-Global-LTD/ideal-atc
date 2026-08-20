@@ -3,5 +3,7 @@ resolver = "3"
 
 members = [
     "crates/surveillance-domain",
-    "crates/adsb-ingest"
-, "apps/surveillance-service"]
+    "crates/adsb-ingest",
+    "apps/surveillance-service",
+    "crates/track-engine"
+]
