@@ -1,0 +1,9 @@
+[package]
+name = "track-engine"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+surveillance-domain = { path = "../surveillance-domain" }
+chrono = "0.4"
+thiserror = "2"
