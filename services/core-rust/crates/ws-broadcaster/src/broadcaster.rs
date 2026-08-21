@@ -25,3 +25,34 @@ impl RadarBroadcaster {
         let _ = self.tx.send(message);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use surveillance_domain::*;
+
+    #[tokio::test]
+    async fn broadcasts_observation() {
+        let broadcaster = RadarBroadcaster::new();
+
+        let mut client = broadcaster.subscribe();
+
+        let observation = Observation::new(
+            AircraftIdentifier::new("40621D"),
+            Position::new(51.4706, -0.4619),
+            Altitude::new(38000.0),
+            Velocity::new(250.0, 180.0, 0.0),
+            SignalQuality::High,
+        );
+
+        broadcaster.publish(RadarMessage::Observation(observation.clone()));
+
+        let received = client.recv().await.unwrap();
+
+        match received {
+            RadarMessage::Observation(obs) => {
+                assert_eq!(obs.aircraft_id.value(), "40621D");
+            }
+        }
+    }
+}
