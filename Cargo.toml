@@ -5,5 +5,6 @@ members = [
     "services/core-rust/crates/surveillance-domain",
     "services/core-rust/crates/adsb-ingest",
     "services/core-rust/apps/surveillance-service",
-    "services/core-rust/crates/track-engine"
+    "services/core-rust/crates/track-engine",
+    "services/core-rust/crates/ws-broadcaster"
 ]
