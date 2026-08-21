@@ -1,0 +1,10 @@
+[package]
+name = "ws-broadcaster"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version = "1", features = ["sync"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+surveillance-domain = { path = "../surveillance-domain" }
