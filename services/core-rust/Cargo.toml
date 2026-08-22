@@ -7,5 +7,6 @@ members = [
     "apps/surveillance-service",
     "crates/track-engine",
     "crates/ws-broadcaster",
-    "crates/websocket-server"
+    "crates/websocket-server",
+    "crates/asterix"
 ]

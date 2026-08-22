@@ -7,5 +7,6 @@ members = [
     "services/core-rust/apps/surveillance-service",
     "services/core-rust/crates/track-engine",
     "services/core-rust/crates/ws-broadcaster",
-    "services/core-rust/crates/websocket-server"
+    "services/core-rust/crates/websocket-server",
+    "services/core-rust/crates/asterix"
 ]
