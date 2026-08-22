@@ -35,15 +35,28 @@ impl TrackEngine {
         self.tracks.values().collect()
     }
 
-    pub fn process(&mut self, observation: Observation) {
+    // pub fn process(&mut self, observation: Observation) {
+    //     let key = observation.aircraft_id.clone();
+
+    //     match self.tracks.get_mut(&key) {
+    //         Some(track) => track.update(observation),
+    //         None => {
+    //             self.tracks.insert(key, TrackState::new(observation));
+    //         }
+    //     }
+    // }
+
+    pub fn process(&mut self, observation: Observation) -> &TrackState {
         let key = observation.aircraft_id.clone();
 
-        match self.tracks.get_mut(&key) {
-            Some(track) => track.update(observation),
-            None => {
-                self.tracks.insert(key, TrackState::new(observation));
-            }
+        if let Some(track) = self.tracks.get_mut(&key) {
+            track.update(observation);
+        } else {
+            self.tracks
+                .insert(key.clone(), TrackState::new(observation));
         }
+
+        self.tracks.get(&key).unwrap()
     }
 
     pub fn total_tracks(&self) -> usize {

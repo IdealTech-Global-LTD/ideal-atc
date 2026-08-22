@@ -872,6 +872,7 @@ dependencies = [
  "tokio-tungstenite",
  "tracing",
  "tracing-subscriber",
+ "track-engine",
  "ws-broadcaster",
 ]
 
