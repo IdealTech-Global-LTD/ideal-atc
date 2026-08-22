@@ -30,11 +30,12 @@ impl WebSocketServer {
             tracing::info!("WebSocket connection from {}", peer_address);
 
             let websocket = accept_async(stream).await?;
+            let broadcaster = Arc::clone(&self.broadcaster);
 
             tracing::info!("WebSocket handshake completed for {}", peer_address);
 
             tokio::spawn(async move {
-                if let Err(error) = handle_session(websocket).await {
+                if let Err(error) = handle_session(websocket, broadcaster).await {
                     tracing::error!("Session error: {}", error);
                 }
             });
