@@ -6,5 +6,6 @@ members = [
     "crates/adsb-ingest",
     "apps/surveillance-service",
     "crates/track-engine",
-    "crates/ws-broadcaster"
+    "crates/ws-broadcaster",
+    "crates/websocket-server"
 ]
