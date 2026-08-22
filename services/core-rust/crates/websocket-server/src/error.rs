@@ -5,9 +5,12 @@ pub enum WebSocketError {
     #[error("connection closed")]
     ConnectionClosed,
 
-    #[error("I/O error: {0}")]
+    #[error(transparent)]
     Io(#[from] std::io::Error),
 
-    #[error("WebSocket error: {0}")]
+    #[error(transparent)]
     WebSocket(#[from] tokio_tungstenite::tungstenite::Error),
+
+    #[error(transparent)]
+    Json(#[from] serde_json::Error),
 }
