@@ -32,9 +32,8 @@ mod tests {
     use surveillance_domain::*;
 
     #[tokio::test]
-    async fn broadcasts_observation() {
+    async fn broadcasts_track_update() {
         let broadcaster = RadarBroadcaster::new();
-
         let mut client = broadcaster.subscribe();
 
         let observation = Observation::new(
@@ -45,14 +44,15 @@ mod tests {
             SignalQuality::High,
         );
 
-        broadcaster.publish(RadarMessage::Observation(observation.clone()));
+        broadcaster.publish(RadarMessage::TrackUpdated(observation.clone()));
 
         let received = client.recv().await.unwrap();
 
         match received {
-            RadarMessage::Observation(obs) => {
+            RadarMessage::TrackUpdated(obs) => {
                 assert_eq!(obs.aircraft_id.value(), "40621D");
             }
+            _ => panic!("expected TrackUpdated message"),
         }
     }
 }

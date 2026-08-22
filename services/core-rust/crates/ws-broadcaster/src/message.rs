@@ -3,5 +3,6 @@ use surveillance_domain::Observation;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum RadarMessage {
-    Observation(Observation),
+    Connected,
+    TrackUpdated(Observation),
 }

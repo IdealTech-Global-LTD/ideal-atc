@@ -16,3 +16,4 @@ thiserror="2"
 
 ws-broadcaster = { path = "../ws-broadcaster" }
 surveillance-domain = { path = "../surveillance-domain" }
+track-engine= {path= "../track-engine"}
