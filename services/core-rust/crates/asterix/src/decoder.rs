@@ -1,4 +1,4 @@
-use surveillance_domain::{Altitude, Observation, Position, SignalQuality, Velocity};
+use surveillance_domain::{Observation, SignalQuality};
 
 use crate::{
     cat021::{Cat021Cursor, Cat021Data},
@@ -13,26 +13,29 @@ pub fn decode_cat021(packet: AsterixPacket) -> Result<Observation, AsterixError>
 
     let mut cursor = Cat021Cursor::new(packet.payload().clone());
 
-    let cat = Cat021Data::decode(&mut cursor)?;
+    let data = Cat021Data::decode(&mut cursor)?;
 
     Ok(Observation::new(
-        cat.target_address,
-        Position::new(0.0, 0.0),
-        Altitude::new(0.0),
-        Velocity::new(0.0, 0.0, 0.0),
+        data.target_address,
+        data.position,
+        data.altitude,
+        data.velocity,
         SignalQuality::High,
     ))
 }
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use bytes::Bytes;
 
     #[test]
-    fn converts_packet_to_observation() {
-        let packet =
-            AsterixPacket::from_bytes(Bytes::from_static(&[21, 0, 6, 0x40, 0x62, 0x1D])).unwrap();
+    fn decodes_aircraft_identifier() {
+        let packet = AsterixPacket::from_bytes(Bytes::from_static(&[
+            21, // CAT021
+            0, 6, // Total packet length = 6 bytes
+            0x40, 0x62, 0x1D, // ICAO address
+        ]))
+        .unwrap();
 
         let observation = decode_cat021(packet).unwrap();
 

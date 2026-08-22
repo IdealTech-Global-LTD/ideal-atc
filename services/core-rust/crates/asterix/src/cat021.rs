@@ -1,5 +1,5 @@
 use bytes::Bytes;
-use surveillance_domain::AircraftIdentifier;
+use surveillance_domain::{AircraftIdentifier, Altitude, Position, Velocity};
 
 use crate::error::AsterixError;
 
@@ -60,19 +60,27 @@ impl Cat021Cursor {
     }
 }
 
-/// Decoded CAT021 fields (MVP).
+/// Decoded CAT021 fields (MVP)
 #[derive(Debug, Clone)]
 pub struct Cat021Data {
     pub target_address: AircraftIdentifier,
+    pub position: Position,
+    pub altitude: Altitude,
+    pub velocity: Velocity,
+    pub callsign: Option<String>,
 }
 
 impl Cat021Data {
-    /// Decode the ICAO Target Address (I021/080).
+    /// Decode the ICAO Target Address (I021/080)
     pub fn decode(cursor: &mut Cat021Cursor) -> Result<Self, AsterixError> {
         let address = cursor.read_u24()?;
 
         Ok(Self {
             target_address: AircraftIdentifier::new(format!("{:06X}", address)),
+            position: Position::new(0.0, 0.0),
+            altitude: Altitude::new(0.0),
+            velocity: Velocity::new(0.0, 0.0, 0.0),
+            callsign: None,
         })
     }
 }
@@ -90,6 +98,9 @@ mod tests {
         let data = Cat021Data::decode(&mut cursor).unwrap();
 
         assert_eq!(data.target_address.value(), "40621D");
+        assert_eq!(data.position.latitude, 0.0);
+        assert_eq!(data.altitude.value, 0.0);
+        assert!(data.callsign.is_none());
     }
 
     #[test]
